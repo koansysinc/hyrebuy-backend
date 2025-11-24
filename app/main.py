@@ -60,9 +60,13 @@ async def health_check():
     }
 
 
-# API routes will be added here in Week 1-2
-# from app.api.v1 import auth, properties, commute, groups
-# app.include_router(auth.router, prefix="/api/v1/auth", tags=["Authentication"])
-# app.include_router(properties.router, prefix="/api/v1/properties", tags=["Properties"])
-# app.include_router(commute.router, prefix="/api/v1/commute", tags=["Commute"])
-# app.include_router(groups.router, prefix="/api/v1/groups", tags=["Groups"])
+# API routes
+from app.api import auth
+
+app.include_router(auth.router, prefix="/api/v1")
+
+# Additional routes will be added in Week 2-3
+# from app.api import properties, commute, groups
+# app.include_router(properties.router, prefix="/api/v1")
+# app.include_router(commute.router, prefix="/api/v1")
+# app.include_router(groups.router, prefix="/api/v1")

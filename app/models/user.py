@@ -26,7 +26,7 @@ class User(Base):
     company_id = Column(UUID(as_uuid=True), nullable=True)  # GCC company (optional)
 
     # Group Admin
-    is_group_admin = Column(Boolean, default=False)
+    is_group_admin = Column(String(10), default="false")  # String for Phase 1 MVP
     total_rewards_earned = Column(String, default="0")  # Stored as string for large numbers
 
     # Timestamps
