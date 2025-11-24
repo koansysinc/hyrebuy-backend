@@ -32,7 +32,7 @@ python scripts/seed_builders.py
 ```
 
 ### 3. `seed_properties.py` (P1-F04)
-Seeds 13 real properties across Hyderabad.
+Seeds 50 real properties across Hyderabad.
 
 **Locations**:
 - Gachibowli (5 properties)
@@ -40,9 +40,12 @@ Seeds 13 real properties across Hyderabad.
 - Madhapur (2 properties)
 - Hitech City (2 properties)
 - Manikonda (2 properties)
+- Kokapet (15 properties)
+- Neopolis (12 properties)
+- Financial District (10 properties)
 
 **Data**:
-- Each property includes: name, builder, location, price (₹4.8Cr - ₹15.5Cr), configuration (2/3/4 BHK), carpet area, lat/long, amenities, group buying support
+- Each property includes: name, builder, location, price (₹4.8Cr - ₹21Cr), configuration (2/3/4 BHK), carpet area, lat/long, amenities, images, group buying support
 
 **Dependencies**: Requires builders to be seeded first (uses builder IDs)
 
@@ -107,7 +110,7 @@ HYREBUY DATABASE SEEDING - DAY 6
 This will seed:
   - 10 GCC Companies (P1-F08)
   - 10 Builders
-  - 13 Properties (P1-F04)
+  - 50 Properties (P1-F04)
 
 ======================================================================
 
@@ -130,7 +133,7 @@ This will seed:
   ✅ Added: Aparna Sarovar Zenith - 3BHK @ ₹9.5Cr (Gachibowli)
   ✅ Added: My Home Bhooja - 3BHK @ ₹12.0Cr (Gachibowli)
   ...
-✅ Successfully seeded 13/13 properties!
+✅ Successfully seeded 50/50 properties!
 
 ======================================================================
 ✅ ALL SEED SCRIPTS COMPLETED SUCCESSFULLY!
@@ -139,7 +142,7 @@ This will seed:
 Database seeded with:
   ✅ 10 GCC Companies
   ✅ 10 Builders
-  ✅ 13 Properties
+  ✅ 50 Properties
 
 Ready for Week 2 development!
 ======================================================================
@@ -189,26 +192,33 @@ python scripts/seed_builders.py && python scripts/seed_properties.py
 | Vasavi Group | 4.3 | 87% | Yes (min 6) |
 | Lansum Properties | 4.2 | 86% | Yes (min 8) |
 
-### Properties (13)
+### Properties (50)
+
+**By Location**:
+- Gachibowli: 5 properties
+- Kondapur: 2 properties
+- Madhapur: 2 properties
+- Hitech City: 2 properties
+- Manikonda: 2 properties
+- Kokapet: 15 properties (₹6.8Cr - ₹18Cr)
+- Neopolis: 12 properties (₹6.5Cr - ₹19.5Cr)
+- Financial District: 10 properties (₹8.2Cr - ₹21Cr)
+
+**Sample Properties**:
 | Property | Builder | Location | Config | Price |
 |----------|---------|----------|--------|-------|
 | Aparna Sarovar Zenith | Aparna | Gachibowli | 3BHK | ₹9.5Cr |
 | My Home Bhooja | My Home | Gachibowli | 3BHK | ₹12Cr |
-| Aliens Space Station | Aliens | Gachibowli | 2BHK | ₹6.5Cr |
-| Prestige Lakeside | Prestige | Kondapur | 3BHK | ₹11Cr |
-| Ramky One Galaxy | Ramky | Kondapur | 2BHK | ₹5.8Cr |
-| My Home Avatar | My Home | Madhapur | 3BHK | ₹11.5Cr |
-| Kolte-Patil iTowers | Kolte-Patil | Madhapur | 2BHK | ₹6.2Cr |
-| Aparna Cyber Life | Aparna | Hitech City | 3BHK | ₹9.8Cr |
-| Incor One City | Incor | Hitech City | 4BHK | ₹15.5Cr |
-| Hallmark Tranquil | Hallmark | Manikonda | 2BHK | ₹4.8Cr |
-| Vasavi Usharam | Vasavi | Manikonda | 3BHK | ₹8.2Cr |
-| Lansum Etania | Lansum | Gachibowli | 3BHK | ₹10.5Cr |
-| Aparna Sarovar Grande | Aparna | Gachibowli | 2BHK | ₹7.2Cr |
+| My Home Vihanga | My Home | Kokapet | 3BHK | ₹13.5Cr |
+| Prestige Silver Oak | Prestige | Kokapet | 4BHK | ₹18Cr |
+| My Home Neopolis | My Home | Neopolis | 3BHK | ₹12.5Cr |
+| Prestige Song of the South | Prestige | Neopolis | 4BHK | ₹19.5Cr |
+| Prestige Falcon City | Prestige | Financial District | 4BHK | ₹21Cr |
+| My Home Mangala | My Home | Financial District | 3BHK | ₹15.5Cr |
 
-**Price Range**: ₹4.8Cr - ₹15.5Cr
+**Price Range**: ₹4.8Cr - ₹21Cr
 **Configurations**: 2BHK, 3BHK, 4BHK
-**All properties support group buying**: 6-12% discounts
+**All properties include**: Images, amenities, group buying support (5-12% discounts)
 
 ## Troubleshooting
 
@@ -243,21 +253,22 @@ After seeding, verify data in database:
 -- Check counts
 SELECT COUNT(*) FROM gcc_companies;  -- Should be 10
 SELECT COUNT(*) FROM builders;       -- Should be 10
-SELECT COUNT(*) FROM properties;     -- Should be 13
+SELECT COUNT(*) FROM properties;     -- Should be 50
 
 -- View sample data
 SELECT name, location FROM gcc_companies LIMIT 5;
 SELECT name, rating FROM builders LIMIT 5;
-SELECT name, configuration, price FROM properties LIMIT 5;
+SELECT name, location, configuration, price FROM properties LIMIT 10;
+
+-- Properties by location
+SELECT location, COUNT(*) FROM properties GROUP BY location ORDER BY COUNT(*) DESC;
 ```
 
-## Day 6 Features Complete
+## Features Complete
 
-- ✅ **P1-F08**: GCC Company Seeding (10 companies)
-- ✅ **P1-F04**: Property Database Seeding (13 properties, partial completion)
-
-**Note**: Day 7 will add more properties to reach the 50+ target.
+- ✅ **P1-F08**: GCC Company Seeding (10 companies) - Day 6
+- ✅ **P1-F04**: Property Database Seeding (50 properties) - Day 6-7
 
 ---
 
-**Status**: Day 6 seed scripts ready for execution
+**Status**: Day 7 complete - seed scripts ready for execution with 50 properties across 8 locations

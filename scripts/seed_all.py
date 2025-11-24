@@ -1,6 +1,6 @@
 """
 Master seed script - runs all seed scripts in correct order
-Day 6: Database Seeding
+Day 6-7: Database Seeding
 
 1. GCC Companies (P1-F08)
 2. Builders
@@ -19,12 +19,12 @@ from seed_properties import seed_properties
 async def seed_all():
     """Run all seed scripts in order"""
     print("\n" + "=" * 70)
-    print("HYREBUY DATABASE SEEDING - DAY 6")
+    print("HYREBUY DATABASE SEEDING - DAY 6-7")
     print("=" * 70)
     print("\nThis will seed:")
     print("  - 10 GCC Companies (P1-F08)")
     print("  - 10 Builders")
-    print("  - 13 Properties (P1-F04)")
+    print("  - 50 Properties (P1-F04)")
     print("\n" + "=" * 70)
 
     try:
@@ -46,7 +46,7 @@ async def seed_all():
         print("\nDatabase seeded with:")
         print("  ✅ 10 GCC Companies")
         print("  ✅ 10 Builders")
-        print("  ✅ 13 Properties")
+        print("  ✅ 50 Properties")
         print("\nReady for Week 2 development!")
         print("=" * 70 + "\n")
 
