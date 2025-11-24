@@ -67,7 +67,7 @@ class Property(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
     # Relationships
-    # builder = relationship("Builder", back_populates="properties")
+    builder = relationship("Builder", back_populates="properties")
     # commute_scores = relationship("CommuteScore", back_populates="property")
     # saved_by = relationship("SavedProperty", back_populates="property")
 

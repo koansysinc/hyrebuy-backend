@@ -5,6 +5,7 @@ Examples: Aparna, My Home, Aliens, Mantri, Sobha, etc.
 
 from sqlalchemy import Column, String, Numeric, DateTime, func
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 import uuid
 
 from app.database import Base
@@ -40,7 +41,7 @@ class Builder(Base):
     updated_at = Column(DateTime(timezone=True), onupdate=func.now(), server_default=func.now())
 
     # Relationships
-    # properties = relationship("Property", back_populates="builder")
+    properties = relationship("Property", back_populates="builder")
 
     def __repr__(self):
         return f"<Builder {self.name} (Rating: {self.rating})>"

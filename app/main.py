@@ -61,12 +61,12 @@ async def health_check():
 
 
 # API routes
-from app.api import auth
+from app.api import auth, properties
 
 app.include_router(auth.router, prefix="/api/v1")
+app.include_router(properties.router, prefix="/api/v1")
 
 # Additional routes will be added in Week 2-3
-# from app.api import properties, commute, groups
-# app.include_router(properties.router, prefix="/api/v1")
+# from app.api import commute, groups
 # app.include_router(commute.router, prefix="/api/v1")
 # app.include_router(groups.router, prefix="/api/v1")
