@@ -31,7 +31,7 @@ class GroupMember(Base):
     # Commitment
     committed_at = Column(DateTime(timezone=True), nullable=True)
     deposit_paid_at = Column(DateTime(timezone=True), nullable=True)
-    deposit_amount = Column(BigInteger, nullable=True)
+    deposit_amount = Column(String, nullable=True)  # String for Phase 1 MVP
 
     # Property Selection
     selected_property_id = Column(UUID(as_uuid=True), ForeignKey("properties.id"), nullable=True)
