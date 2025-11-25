@@ -61,12 +61,13 @@ async def health_check():
 
 
 # API routes
-from app.api import auth, properties
+from app.api import auth, properties, saved_properties, admin, commute, groups, rewards, referrals
 
 app.include_router(auth.router, prefix="/api/v1")
 app.include_router(properties.router, prefix="/api/v1")
-
-# Additional routes will be added in Week 2-3
-# from app.api import commute, groups
-# app.include_router(commute.router, prefix="/api/v1")
-# app.include_router(groups.router, prefix="/api/v1")
+app.include_router(saved_properties.router, prefix="/api/v1")
+app.include_router(admin.router, prefix="/api/v1")
+app.include_router(commute.router, prefix="/api/v1")  # Phase 2: Commute Calculator
+app.include_router(groups.router, prefix="/api/v1")  # Phase 2: Group Buying
+app.include_router(rewards.router, prefix="/api/v1")  # Phase 3: Rewards & Gamification
+app.include_router(referrals.router, prefix="/api/v1")  # Phase 3: Referral System

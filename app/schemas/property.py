@@ -34,7 +34,6 @@ class PropertyResponse(BaseModel):
     carpet_area: str
     price: int
     price_per_sqft: Optional[str] = None
-    status: str
     amenities: Optional[List[str]] = []
     images: Optional[List[str]] = []
     smart_score: Decimal
@@ -42,9 +41,8 @@ class PropertyResponse(BaseModel):
     builder_score: Decimal
     price_score: Decimal
     commute_score: Decimal
-    available_for_group_buying: str
-    minimum_group_size: Optional[str] = None
-    group_discount_tiers: Optional[str] = None
+    supports_group_buying: str
+    group_discount_percentage: Optional[str] = None
     created_at: datetime
     updated_at: Optional[datetime] = None
 

@@ -17,8 +17,8 @@ class GCCCompany(Base):
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
 
     # Company Info
-    name = Column(String(255), nullable=False, unique=True)  # e.g., "Amazon"
-    full_name = Column(String(255), nullable=True)  # e.g., "Amazon Development Centre India"
+    name = Column(String(255), nullable=False)  # e.g., "Amazon Development Centre India"
+    short_name = Column(String(255), nullable=True, unique=True)  # e.g., "Amazon"
     location = Column(String(255), nullable=False)  # e.g., "Gachibowli, Hyderabad"
 
     # Geolocation (for commute calculation)

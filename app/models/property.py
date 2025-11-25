@@ -31,21 +31,10 @@ class Property(Base):
     # Configuration
     configuration = Column(String(50), nullable=False)  # e.g., "3BHK", "4BHK"
     carpet_area = Column(String, nullable=False)  # Square feet (as string for Phase 1)
-    total_floors = Column(String, nullable=True)
-    tower_name = Column(String(100), nullable=True)
 
     # Pricing
     price = Column(BigInteger, nullable=False, index=True)  # In INR
     price_per_sqft = Column(String, nullable=True)
-
-    # Status
-    status = Column(String(20), default="available", index=True)  # available, sold, upcoming
-
-    # Amenities
-    amenities = Column(ARRAY(String), nullable=True)  # ["Swimming Pool", "Gym", "Park"]
-
-    # Images
-    images = Column(ARRAY(String), nullable=True)  # Array of image URLs
 
     # Smart Scoring (Phase 1)
     smart_score = Column(Numeric(5, 2), default=0.0)  # 0-100
@@ -54,13 +43,18 @@ class Property(Base):
     price_score = Column(Numeric(5, 2), default=0.0)
     commute_score = Column(Numeric(5, 2), default=0.0)
 
+    # Amenities
+    amenities = Column(ARRAY(String), nullable=True)  # ["Swimming Pool", "Gym", "Park"]
+
+    # Images
+    images = Column(ARRAY(String), nullable=True)  # Array of image URLs
+
+    # Group Buying (Phase 1)
+    supports_group_buying = Column(String, default="false")  # Boolean as string
+    group_discount_percentage = Column(String, nullable=True)
+
     # Full-Text Search
     search_vector = Column(TSVECTOR, nullable=True)
-
-    # Group Buying
-    available_for_group_buying = Column(String, default="false")  # Boolean as string
-    minimum_group_size = Column(String, nullable=True)
-    group_discount_tiers = Column(String, nullable=True)  # JSON as string for Phase 1
 
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())

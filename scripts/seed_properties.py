@@ -883,13 +883,13 @@ async def seed_properties():
                     description=prop_data.get("description"),
                     amenities=prop_data.get("amenities", []),
                     images=prop_data.get("images", []),
-                    available_for_group_buying=prop_data.get("supports_group_buying", "false"),
-                    minimum_group_size=prop_data.get("group_discount_percentage"),  # Store discount % in minimum_group_size for now
-                    smart_score="0.0",  # Will be calculated later
-                    location_score="0.0",
-                    builder_score="0.0",
-                    price_score="0.0",
-                    commute_score="0.0"
+                    supports_group_buying=prop_data.get("supports_group_buying", "false"),
+                    group_discount_percentage=prop_data.get("group_discount_percentage"),
+                    smart_score=0.0,  # Will be calculated later
+                    location_score=0.0,
+                    builder_score=0.0,
+                    price_score=0.0,
+                    commute_score=0.0
                 )
 
                 session.add(property_obj)

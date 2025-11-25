@@ -7,7 +7,8 @@ Endpoints:
 - GET /properties/{id} - Get single property detail (Day 10-11)
 """
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import status as http_status
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, or_, and_
 from sqlalchemy.orm import joinedload
@@ -34,7 +35,6 @@ async def search_properties(
     configuration: Optional[str] = Query(None, description="Filter by configuration (e.g., '3BHK')"),
     min_carpet_area: Optional[int] = Query(None, ge=0, description="Minimum carpet area"),
     max_carpet_area: Optional[int] = Query(None, ge=0, description="Maximum carpet area"),
-    status: str = Query("available", description="Filter by status"),
     group_buying_only: bool = Query(False, description="Show only group buying properties"),
     sort_by: str = Query("price", description="Sort field: price, smart_score, created_at"),
     sort_order: str = Query("asc", description="Sort order: asc or desc"),
@@ -52,7 +52,6 @@ async def search_properties(
     - min_price/max_price: Price range filter
     - configuration: Exact match on configuration (2BHK, 3BHK, 4BHK)
     - min_carpet_area/max_carpet_area: Carpet area range
-    - status: Property status (available, sold, upcoming)
     - group_buying_only: Only show properties with group buying support
 
     Sorting:
@@ -92,11 +91,8 @@ async def search_properties(
         if max_carpet_area is not None:
             filters.append(Property.carpet_area.cast(func.integer) <= max_carpet_area)
 
-        if status:
-            filters.append(Property.status == status)
-
         if group_buying_only:
-            filters.append(Property.available_for_group_buying == "true")
+            filters.append(Property.supports_group_buying == "true")
 
         # Apply all filters
         if filters:
@@ -139,7 +135,7 @@ async def search_properties(
 
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error searching properties: {str(e)}"
         )
 
@@ -161,7 +157,7 @@ async def get_property(
 
         if not property_obj:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
+                status_code=http_status.HTTP_404_NOT_FOUND,
                 detail="Property not found"
             )
 
@@ -171,6 +167,6 @@ async def get_property(
         raise
     except Exception as e:
         raise HTTPException(
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            status_code=http_status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail=f"Error fetching property: {str(e)}"
         )

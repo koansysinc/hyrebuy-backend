@@ -19,22 +19,21 @@ class Builder(Base):
 
     # Builder Info
     name = Column(String(255), nullable=False, unique=True)  # e.g., "Aparna Constructions"
-    full_name = Column(String(255), nullable=True)
     description = Column(String, nullable=True)
 
     # Ratings
-    rating = Column(Numeric(3, 2), default=0.0)  # e.g., 4.5 out of 5
-    on_time_delivery_percentage = Column(Numeric(5, 2), default=0.0)  # e.g., 92.00%
-
-    # Contact Info
-    phone = Column(String(20), nullable=True)
-    email = Column(String(255), nullable=True)
-    website = Column(String(255), nullable=True)
+    rating = Column(String, nullable=True)  # String for Phase 1 MVP (e.g., "4.5")
+    total_projects = Column(String, nullable=True)  # String for Phase 1 MVP
+    on_time_delivery_percentage = Column(String, nullable=True)  # String for Phase 1 MVP (e.g., "92.0")
 
     # Group Buying Settings (Phase 1)
     accepts_group_buying = Column(String, default="false")  # Boolean as string for Phase 1
     minimum_group_size = Column(String, default="5")
-    maximum_discount_percent = Column(Numeric(5, 2), default=30.00)
+
+    # Contact Info
+    website = Column(String(255), nullable=True)
+    contact_phone = Column(String(20), nullable=True)
+    contact_email = Column(String(255), nullable=True)
 
     # Timestamps
     created_at = Column(DateTime(timezone=True), server_default=func.now())
