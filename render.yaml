@@ -1,0 +1,34 @@
+services:
+  - type: web
+    name: hyrebuy-backend
+    env: python
+    region: oregon
+    plan: free
+    branch: master
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: APP_NAME
+        value: HyreBuy API
+      - key: APP_VERSION
+        value: 1.0.0
+      - key: ENVIRONMENT
+        value: production
+      - key: DEBUG
+        value: False
+      - key: PYTHON_VERSION
+        value: 3.10.0
+      - key: DATABASE_URL
+        sync: false
+      - key: REDIS_URL
+        value: redis://localhost:6379
+      - key: SECRET_KEY
+        sync: false
+      - key: ALLOWED_ORIGINS
+        sync: false
+      - key: OSRM_API_URL
+        value: https://router.project-osrm.org
+      - key: EMAIL_FROM
+        value: noreply@hyrebuy.com
+      - key: LOG_LEVEL
+        value: INFO
