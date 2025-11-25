@@ -16,24 +16,40 @@ DATABASE_URL = os.getenv(
     "postgresql+asyncpg://postgres:postgres@localhost:5432/hyrebuy"
 )
 
-# Create async engine
-engine = create_async_engine(
-    DATABASE_URL,
-    echo=True if os.getenv("DEBUG", "False") == "True" else False,
-    future=True,
-    pool_pre_ping=True,
-    pool_size=5,
-    max_overflow=10,
-)
+# Lazy initialization of database engine
+_engine = None
+_async_session_maker = None
 
-# Create async session factory
-async_session_maker = async_sessionmaker(
-    engine,
-    class_=AsyncSession,
-    expire_on_commit=False,
-    autocommit=False,
-    autoflush=False,
-)
+def get_engine():
+    """Get or create the database engine (lazy initialization)"""
+    global _engine
+    if _engine is None:
+        _engine = create_async_engine(
+            DATABASE_URL,
+            echo=True if os.getenv("DEBUG", "False") == "True" else False,
+            future=True,
+            pool_pre_ping=True,
+            pool_size=5,
+            max_overflow=10,
+        )
+    return _engine
+
+def get_session_maker():
+    """Get or create the session maker (lazy initialization)"""
+    global _async_session_maker
+    if _async_session_maker is None:
+        _async_session_maker = async_sessionmaker(
+            get_engine(),
+            class_=AsyncSession,
+            expire_on_commit=False,
+            autocommit=False,
+            autoflush=False,
+        )
+    return _async_session_maker
+
+# Direct access functions for backwards compatibility
+engine = get_engine
+async_session_maker = get_session_maker
 
 # Declarative base for models
 Base = declarative_base()
@@ -48,7 +64,7 @@ async def get_db() -> AsyncSession:
         async def get_users(db: AsyncSession = Depends(get_db)):
             # Use db here
     """
-    async with async_session_maker() as session:
+    async with get_session_maker()() as session:
         try:
             yield session
             await session.commit()
@@ -61,10 +77,10 @@ async def get_db() -> AsyncSession:
 
 async def init_db():
     """Initialize database (create all tables) - for testing only"""
-    async with engine.begin() as conn:
+    async with get_engine().begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
 
 
 async def close_db():
     """Close database connection pool"""
-    await engine.dispose()
+    await get_engine().dispose()
